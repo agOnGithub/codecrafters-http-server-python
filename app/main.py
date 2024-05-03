@@ -35,7 +35,7 @@ def handle_client(client: socket.socket, addr, fdir):
                 client.send(response)
             except:
                 client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n") 
-       else:
+        else:
             file_contents = data.split("\r\n\r\n")[1].encode("ascii")
             with open(fpath, "wb") as file:
                file.write(file_contents)
