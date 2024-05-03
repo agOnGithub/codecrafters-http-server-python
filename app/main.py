@@ -19,7 +19,7 @@ def handle_client(client: socket.socket, addr, fdir):
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
         
     elif data.split(" ")[1].startswith("/files/"):
-        fname = path.removeprefix(b"/files/").decode()
+        fname = data.removeprefix(b"/files/").decode()
         fpath = fdir + "/" + fname
         try:
             f = open(fpath, "rb")
