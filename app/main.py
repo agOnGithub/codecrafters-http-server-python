@@ -14,9 +14,7 @@ def main():
         client, addr = server_socket.accept() # wait for client
         Thread(target=handle_client, args=(client, addr, fdir)).start()
 
-def handle_client(client: socket.socket, addr, fdir):
-    print("start: " + fdir + " the end")
-    
+def handle_client(client: socket.socket, addr, fdir):    
     data = client.recv(4096).decode()
     if data.split(" ")[1] == "/":
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
@@ -24,7 +22,7 @@ def handle_client(client: socket.socket, addr, fdir):
     elif data.split(" ")[1].startswith("/files/"):
         fname = data.removeprefix("/files/")
         fpath = fdir + fname
-      #  print("start " + fpath + " the end")
+        print("start " + fpath + " the end")
         try:
             f = open(fpath, "rb")
             blob = f.read()
