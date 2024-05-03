@@ -10,7 +10,7 @@ def main():
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     
     while True:
-        client, _ = server_socket.accept() # wait for client
+        client, addr, _ = server_socket.accept() # wait for client
         Thread(target=handle_client, args=(client, addr, fdir)).start()
 
 def handle_client(client: socket.socket, addr, fdir):
