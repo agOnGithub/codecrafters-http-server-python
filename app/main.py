@@ -22,7 +22,7 @@ def handle_client(client: socket.socket, addr, fdir):
     elif data.split(" ")[1].startswith("/files/"):
         fname = data.removeprefix("/files/")
         fpath = fdir + fname
-        print("start " + fpath + " the end")
+        print("start " + fname + " the end")
         try:
             f = open(fpath, "rb")
             blob = f.read()
