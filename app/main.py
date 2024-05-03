@@ -28,7 +28,6 @@ def handle_client(client: socket.socket, addr, fdir):
             response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
             response.extend(blob)
             client.send(response)
-            f.close()
         except:
             client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n")
             
