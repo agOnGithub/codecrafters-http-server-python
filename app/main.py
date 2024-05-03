@@ -36,7 +36,7 @@ def handle_client(client: socket.socket, addr, fdir):
         else:
             file_contents = data.split("\r\n\r\n")[1]
             try:
-                if not os.path.exists(fdir) 
+                if not os.path.exists(fdir): 
                     os.makedirs(fdir)
                 with open(fpath, "wb") as file:
                     file.write(file_contents)
