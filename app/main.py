@@ -21,11 +21,11 @@ def handle_client(client: socket.socket, addr, fdir):
     elif data.split(" ")[1].startswith("/files/"):
         fname = data.split(" ")[1].split("/")[2]
         fpath = fdir + fname
-        print("start " + fpath + " the end")
         try:
             f = open(fpath, "rb")
             blob = f.read()
             f.close()
+            print("blob is", blob)
             response = bytearray(b"HTTP/1.1 200 OK\r\n Content-Type: aplication/octet-stream")
             response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
             response.extend(blob)
