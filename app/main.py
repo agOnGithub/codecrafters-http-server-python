@@ -26,7 +26,7 @@ def handle_client(client: socket.socket, addr, fdir):
             blob = f.read()
             f.close()
             print("blob is", blob)
-            response = bytearray(b"HTTP/1.1 200 OK\r\n Content-Type: aplication/octet-stream")
+            response = bytearray(b"HTTP/1.1 200 OK\r\n Content-Type: application/octet-stream")
             response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
             response.extend(blob)
             client.send(response)
