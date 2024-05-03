@@ -1,33 +1,50 @@
 import socket
 from threading import Thread
+import sys
 
 def main():
+    fdir = ""
+    if len(sys.argv) == 3 and sys.argv[1] == "--directory":
+        fdir = sys.ragv[2]
+        
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     
     while True:
         client, _ = server_socket.accept() # wait for client
-        Thread(target=handle_client, args=[client]).start()
+        Thread(target=handle_client, args=(client, addr, fdir)).start()
 
-def handle_client(client: socket.socket):
+def handle_client(client: socket.socket, addr, fdir):
     data = client.recv(4096).decode()
     if data.split(" ")[1] == "/":
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
+        
+    elif data.split(" ")[1].startswith("/files/"):
+        fname = path.removeprefix(b"/files/").decode()
+        fpath = fdir + "/" + fname
+        try:
+            f = open(fpath, "rb")
+            blob = f.read()
+            f.close()
+            response = bytearray(b"HTTP/1.1 200 OK\r\n Content-Type: aplication/octet-stream")
+            response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
+            response.extend(blob)
+            client.send(response)
+        except:
+            client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n")
+            
    
     elif data.split(" ")[1].startswith("/echo/"):
         text = data.split(" ")[1].split("echo")[1].split("/")[1]
-        response = "HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n Content-Length: {len(text)} \r\n\r\n"
-        #client.send(b"HTTP/1.1 200 OK\r\n")
-        #client.send(b"Content-Type: text/plain\r\n")
-        #client.send(f"Content-Length: {len(text)}\r\n".encode("ascii"))
-        #client.send(b"\r\n")
+        response = bytearray("HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n")
+        response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
+        client.send(response.encode("ascii"))
         client.send(text.encode("ascii"))
         
     elif data.split(" ")[1].startswith("/user-agent"):
         text = data.split("\r\n")[2].split(" ")[1]
-        client.send(b"HTTP/1.1 200 OK\r\n")
-        client.send(b"Content-Type: text/plain\r\n")
-        client.send(f"Content-Length: {len(text)}\r\n".encode("ascii"))
-        client.send(b"\r\n")
+        response = bytearray("HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n")
+        response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
+        client.send(response.encode("ascii"))
         client.send(text.encode("ascii"))
         
     else:
