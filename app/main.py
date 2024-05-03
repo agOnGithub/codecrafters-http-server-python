@@ -1,6 +1,7 @@
 import socket
 from threading import Thread
 import sys
+import os
 
 def main():
     fdir = ""
