@@ -22,7 +22,7 @@ def handle_client(client: socket.socket, addr, fdir):
     elif data.split(" ")[1].startswith("/files/"):
         fname = data.split(" ")[1].split("/")[2]
         fpath = fdir + fname
-        print(data.split(" ")[1])
+        print(data.split(" ")[0])
         #if data.startswith("GET"):
         try:
             f = open(fpath, "rb")
