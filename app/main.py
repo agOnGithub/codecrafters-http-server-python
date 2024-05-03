@@ -5,7 +5,7 @@ import sys
 def main():
     fdir = ""
     if len(sys.argv) == 3 and sys.argv[1] == "--directory":
-        fdir = sys.ragv[2]
+        fdir = sys.argv[2]
         
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     
