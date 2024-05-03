@@ -20,7 +20,7 @@ def handle_client(client: socket.socket, addr, fdir):
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
         
     elif data.split(" ")[1].startswith("/files/"):
-        fname = data.split(" ")[1].split("/")[1]
+        fname = data.split(" ")[1].split("/")[2]
         fpath = fdir + fname
         print("start " + fname + " the end")
         try:
