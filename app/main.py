@@ -12,10 +12,11 @@ def main():
     
     while True:
         client, addr = server_socket.accept() # wait for client
-        print("start: " + fdir + " the end")
         Thread(target=handle_client, args=(client, addr, fdir)).start()
 
 def handle_client(client: socket.socket, addr, fdir):
+    print("start: " + fdir + " the end")
+    
     data = client.recv(4096).decode()
     if data.split(" ")[1] == "/":
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
