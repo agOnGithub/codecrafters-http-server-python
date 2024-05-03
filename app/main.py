@@ -10,7 +10,7 @@ def main():
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     
     while True:
-        client, addr, _ = server_socket.accept() # wait for client
+        client, addr = server_socket.accept() # wait for client
         Thread(target=handle_client, args=(client, addr, fdir)).start()
 
 def handle_client(client: socket.socket, addr, fdir):
@@ -24,13 +24,13 @@ def handle_client(client: socket.socket, addr, fdir):
         try:
             f = open(fpath, "rb")
             blob = f.read()
+            f.close()
             response = bytearray(b"HTTP/1.1 200 OK\r\n Content-Type: aplication/octet-stream")
             response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
             response.extend(blob)
             client.send(response)
         except:
-            client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n")
-            
+            client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n")        
    
     elif data.split(" ")[1].startswith("/echo/"):
         text = data.split(" ")[1].split("echo")[1].split("/")[1]
