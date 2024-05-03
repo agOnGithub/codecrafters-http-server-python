@@ -19,9 +19,8 @@ def handle_client(client: socket.socket, addr, fdir):
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
         
     elif data.split(" ")[1].startswith("/files/"):
-        print("files?" + data.split(" ")[1])
         fname = data.removeprefix("/files/")
-        fpath = fdir + "/" + fname
+        fpath = fdir + fname
         try:
             f = open(fpath, "rb")
             blob = f.read()
@@ -34,7 +33,6 @@ def handle_client(client: socket.socket, addr, fdir):
             client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n")        
    
     elif data.split(" ")[1].startswith("/echo/"):
-        print("echo?" + data.split(" ")[1])
         text = data.split(" ")[1].split("echo")[1].split("/")[1]
         response = bytearray("HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
@@ -42,7 +40,6 @@ def handle_client(client: socket.socket, addr, fdir):
         client.send(text.encode("ascii"))
         
     elif data.split(" ")[1].startswith("/user-agent"):
-        print("user agent?" + data.split(" ")[1])
         text = data.split("\r\n")[2].split(" ")[1]
         response = bytearray("HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
@@ -50,7 +47,6 @@ def handle_client(client: socket.socket, addr, fdir):
         client.send(text.encode("ascii"))
         
     else:
-        print("what else?" + data.split(" ")[1])
         client.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
 if __name__ == "__main__":
     main()
