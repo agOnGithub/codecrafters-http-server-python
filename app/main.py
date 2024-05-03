@@ -6,7 +6,7 @@ def main():
     
     while True:
         client, _ = server_socket.accept() # wait for client
-        Thread(target=handle_client, args=[client_socket]).start()
+        Thread(target=handle_client, args=[client]).start()
 
 def handle_client(client: socket.socket):
     data = client.recv(4096).decode()
