@@ -25,7 +25,6 @@ def handle_client(client: socket.socket, addr, fdir):
             f = open(fpath, "rb")
             blob = f.read()
             f.close()
-            print("blob is", blob)
             response = bytearray(b"HTTP/1.1 200 OK\r\n")
             response.extend(b"Content-Type: application/octet-stream\r\n")
             response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
@@ -36,14 +35,16 @@ def handle_client(client: socket.socket, addr, fdir):
    
     elif data.split(" ")[1].startswith("/echo/"):
         text = data.split(" ")[1].split("echo")[1].split("/")[1]
-        response = bytearray("HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n")
+        response = bytearray("HTTP/1.1 200 OK\r\n")
+        response.extend(b"Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
         client.send(response.encode("ascii"))
         client.send(text.encode("ascii"))
         
     elif data.split(" ")[1].startswith("/user-agent"):
         text = data.split("\r\n")[2].split(" ")[1]
-        response = bytearray("HTTP/1.1 200 OK\r\n Content-Type: text/plain\r\n")
+        response = bytearray("HTTP/1.1 200 OK\r\n")
+        response.extend(b"Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
         client.send(response.encode("ascii"))
         client.send(text.encode("ascii"))
