@@ -28,7 +28,8 @@ def handle_client(client: socket.socket, addr, fdir):
             with open(fpath, "wb") as file:
                file.write(file_contents)
             client.send(b"HTTP/1.1 201 Created\r\n")
-        else data.split(" ")[0] == "GET":
+        #else data.split(" ")[0] == "GET":
+        else:
             try:
                 f = open(fpath, "rb")
                 blob = f.read()
