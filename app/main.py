@@ -1,5 +1,5 @@
 import socket
-import threading
+from threading import Thread
 
 def main():
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
