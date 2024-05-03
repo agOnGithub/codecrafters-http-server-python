@@ -3,7 +3,7 @@ import socket
 def main():
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     client, _ = server_socket.accept() # wait for client
-    data = client.recv(1024).decode()
+    data = client.recv(4096).decode()
     
     if data.split(" ")[1] == "/":
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
@@ -18,7 +18,7 @@ def main():
         client.send(text.encode("ascii"))
         
     elif data.split(" ")[1].startswith("/user-agent"):
-        text = data.split(" ")[5].split(" ")[1]
+        text = data.split(" ")[3].split(" ")[1]
         client.send(b"HTTP/1.1 200 OK\r\n")
         client.send(b"Content-Type: text/plain\r\n")
         client.send(f"Content-Length: {len(text)}\r\n".encode("ascii"))
