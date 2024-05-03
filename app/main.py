@@ -34,7 +34,7 @@ def handle_client(client: socket.socket, addr, fdir):
             except:
                 client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n") 
         else:
-            file_contents = data.split(" ")[5]
+            file_contents = data.split(" ")[1]
             print("start: " + file_contents + " the end")
             #try:
                 
