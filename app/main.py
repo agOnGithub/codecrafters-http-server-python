@@ -35,15 +35,11 @@ def handle_client(client: socket.socket, addr, fdir):
                 client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n") 
         else:
             file_contents = data.split("\r\n\r\n")[1]
-            try:
-                if not os.path.exists(fdir): 
-                    os.makedirs(fdir)
-                with open(fpath, "wb") as file:
-                    file.write(file_contents)
-                    client.send(b"HTTP/1.1 201 Created\r\n")
-                
-            except:
-                client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n")
+            if not os.path.exists(fdir): 
+                os.makedirs(fdir)
+            with open(fpath, "wb") as file:
+                file.write(file_contents)
+                client.send(b"HTTP/1.1 201 Created\r\n")
    
     elif data.split(" ")[1].startswith("/echo/"):
         text = data.split(" ")[1].split("echo")[1].split("/")[1]
