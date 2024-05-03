@@ -22,6 +22,7 @@ def handle_client(client: socket.socket, addr, fdir):
     elif data.split(" ")[1].startswith("/files/"):
         fname = data.split(" ")[1].split("/")[2]
         fpath = fdir + fname
+        print(data.split(" ")[1])
         #if data.startswith("GET"):
         try:
             f = open(fpath, "rb")
@@ -38,7 +39,7 @@ def handle_client(client: socket.socket, addr, fdir):
            # file_contents = data.split("\r\n\r\n")[1].encode("ascii")
            # with open(fpath, "wb") as file:
            #     file.write(file_contents)
-       #         client.send(b"HTTP/1.1 201 Created\r\n")
+       #client.send(b"HTTP/1.1 201 Created\r\n")
    
     elif data.split(" ")[1].startswith("/echo/"):
         text = data.split(" ")[1].split("echo")[1].split("/")[1]
