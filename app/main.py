@@ -6,6 +6,7 @@ def main():
     fdir = ""
     if len(sys.argv) == 3 and sys.argv[1] == "--directory":
         fdir = sys.argv[2]
+        print("start: " + fdir + " the end")
         
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     
@@ -21,7 +22,7 @@ def handle_client(client: socket.socket, addr, fdir):
     elif data.split(" ")[1].startswith("/files/"):
         fname = data.removeprefix("/files/")
         fpath = fdir + fname
-        print("start " + fpath + " the end")
+      #  print("start " + fpath + " the end")
         try:
             f = open(fpath, "rb")
             blob = f.read()
