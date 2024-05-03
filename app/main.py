@@ -23,17 +23,17 @@ def handle_client(client: socket.socket, addr, fdir):
         fname = data.split(" ")[1].split("/")[2]
         fpath = fdir + fname
         #if data.startswith("GET"):
-            try:
-                f = open(fpath, "rb")
-                blob = f.read()
-                f.close()
-                response = bytearray(b"HTTP/1.1 200 OK\r\n")
-                response.extend(b"Content-Type: application/octet-stream\r\n")
-                response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
-                response.extend(blob)
-                client.send(response)
-            except:
-                client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n") 
+        try:
+            f = open(fpath, "rb")
+            blob = f.read()
+            f.close()
+            response = bytearray(b"HTTP/1.1 200 OK\r\n")
+            response.extend(b"Content-Type: application/octet-stream\r\n")
+            response.extend(f"Content-Length: {len(blob)}\r\n\r\n".encode())
+            response.extend(blob)
+            client.send(response)
+        except:
+            client.send(b"HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n") 
        # else:
            # file_contents = data.split("\r\n\r\n")[1].encode("ascii")
            # with open(fpath, "wb") as file:
