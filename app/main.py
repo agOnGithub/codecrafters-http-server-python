@@ -7,8 +7,17 @@ def main():
     
     if data.split(" ")[1] == "/":
         client.send(b"HTTP/1.1 200 OK\r\n\r\n")
+   
+    elif data.split(" ")[1].startswith("/echo/"):
+        text = data.split(" ")[1].split("echo")[1].split("/")[1]
+    
+        client.send(b"HTTP/1.1 200 OK\r\n")
+        client.send(b"Content-Type: text/plain\r\n")
+        client.send(f"Content-Length: {len(text)}\r\n".encode("ascii"))
+        client.send(b"\r\n")
+        client.send(text.encode("ascii"))
+        
     else:
         client.send(b"HTTP/1.1 404 Not Found\r\n\r\n")
-
 if __name__ == "__main__":
     main()
