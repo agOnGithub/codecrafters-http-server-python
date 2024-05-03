@@ -6,12 +6,13 @@ def main():
     fdir = ""
     if len(sys.argv) == 3 and sys.argv[1] == "--directory":
         fdir = sys.argv[2]
-        print("start: " + fdir + " the end")
+        #print("start: " + fdir + " the end")
         
     server_socket = socket.create_server(("localhost", 4221), reuse_port=True)
     
     while True:
         client, addr = server_socket.accept() # wait for client
+        print("start: " + fdir + " the end")
         Thread(target=handle_client, args=(client, addr, fdir)).start()
 
 def handle_client(client: socket.socket, addr, fdir):
