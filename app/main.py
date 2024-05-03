@@ -43,7 +43,7 @@ def handle_client(client: socket.socket, addr, fdir):
         
     elif data.split(" ")[1].startswith("/user-agent"):
         text = data.split("\r\n")[2].split(" ")[1]
-        response = bytearray(b"HTTP/1.1 200 OK\r\n".encode("ascii"))
+        response = bytearray("HTTP/1.1 200 OK\r\n".encode("ascii"))
         response.extend(b"Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
         client.send(response)
