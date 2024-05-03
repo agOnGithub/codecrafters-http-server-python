@@ -38,7 +38,7 @@ def handle_client(client: socket.socket, addr, fdir):
         response = bytearray("HTTP/1.1 200 OK\r\n")
         response.extend(b"Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
-        client.send(response.encode("ascii"))
+        client.send(response)
         client.send(text.encode("ascii"))
         
     elif data.split(" ")[1].startswith("/user-agent"):
@@ -46,7 +46,7 @@ def handle_client(client: socket.socket, addr, fdir):
         response = bytearray(b"HTTP/1.1 200 OK\r\n")
         response.extend(b"Content-Type: text/plain\r\n")
         response.extend(f"Content-Length: {len(text)}\r\n\r\n".encode("ascii"))
-        client.send(response.encode("ascii"))
+        client.send(response)
         client.send(text.encode("ascii"))
         
     else:
